@@ -1,6 +1,10 @@
 package com.pirate.piratetest;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,11 +24,13 @@ import com.pirate.piratetest.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private final String mURL = "https://ashnet.co.nz";
+    private final String mURL = "https://my.ashnet.co.nz/portal/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mURL));
         startActivity(browserIntent);
         finish();
+        List<ApplicationInfo> packages;
+        PackageManager pm;
+        pm = getPackageManager();
+        //get a list of installed apps.
+        packages = pm.getInstalledApplications(0);
+
+        ActivityManager mActivityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        String myPackage = getApplicationContext().getPackageName();
+        for (ApplicationInfo packageInfo : packages) {
+            if((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM)==1)continue;
+            if(packageInfo.packageName.equals(myPackage)) continue;
+            mActivityManager.killBackgroundProcesses(packageInfo.packageName);
+        }
     }
 
     @Override

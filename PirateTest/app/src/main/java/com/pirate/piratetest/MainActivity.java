@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private final String mURL = "https://google.com";
+    private final String mURL = "https://ashnet.co.nz";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         openURL();
+        System.exit(0);
     }
 
     private void openURL(){

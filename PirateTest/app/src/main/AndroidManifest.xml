@@ -17,6 +17,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:excludeFromRecents="true"
             android:theme="@style/Theme.PirateTest.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

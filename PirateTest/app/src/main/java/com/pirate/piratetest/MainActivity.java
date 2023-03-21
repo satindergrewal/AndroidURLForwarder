@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         openURL();
-        System.exit(0);
     }
 
     private void openURL(){
@@ -55,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
         ActivityManager mActivityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
         String myPackage = getApplicationContext().getPackageName();
         for (ApplicationInfo packageInfo : packages) {
-            if((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM)==1)continue;
-            if(packageInfo.packageName.equals(myPackage)) continue;
-            mActivityManager.killBackgroundProcesses(packageInfo.packageName);
+            if(packageInfo.processName!=null && packageInfo.processName.equalsIgnoreCase("com.pirate.piratetest")) {
+                if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) continue;
+                mActivityManager.killBackgroundProcesses(packageInfo.packageName);
+            }
         }
     }
 
